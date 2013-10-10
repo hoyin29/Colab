@@ -1,0 +1,66 @@
+<div id="loginPageID" data-role="page">
+    <div id="loginPageHeaderID" data-role="header" data-position="inline" data-theme="a">
+	    <h1>Colab</h1>
+   	</div>
+	
+	<div id="loginPageContentID" data-role="content">
+		<input id="usernameID" type="text" placeholder="Username">
+		<input id="passwordID" type="password" placeholder="Password">
+		<input type="submit" value="Login">
+	</div>
+	
+	<div id="loginPageFooterID" data-role="footer">
+		
+	</div>
+</div>
+
+<div id="homePageID" data-role="page">
+    <div id="homePageHeaderID" data-role="header" data-inline="true" data-theme="a">
+		<h3>Home</h3>
+		<a href="#addCoursePageID" data-role="button" data-mini="true" data-inline="true" data-icon="plus">Add</a>
+		<a href="#deleteCoursePageID" data-role="button" data-inline="true" data-mini="true" data-icon="minus" class="ui-btn-right">Delete</a>
+	</div>
+	
+	<div id="homePageContentID" data-role="content">
+		<ul id="peopleListID" data-role="listview" data-inset="true" data-filter="true" data-theme="c" data-divider-theme="b">
+		</ul>
+	</div>
+	
+	<div id="homePageFooterID" data-role="footer">
+	
+	</div>
+</div>
+
+<div id="addCoursePageID" data-role="page">
+    <div id="addCoursePageHeaderID" data-role="header" data-position="inline" data-theme="a">
+		<h3>Add Class</h3>
+		<a href="#homePageID" data-role="button" data-mini="true" data-inline="true" data-icon="back" data-rel="back">Back</a>
+   	</div>
+		
+	<div id="addCoursePageContentID" data-role="content">
+		<input id="courseNameID" type="text" placeholder="Course name">
+		<input id="studentNumID" type="text" placeholder="Student ID">
+		<input id="studentFirstID" type="text" placeholder="First name">
+		<input id="studentLastID" type="text" placeholder="Last name">
+		<input id="addCourseBtnID" type="submit" value="Add">
+	</div>
+	
+	<div id="addCoursePageFooterID" data-role="footer">
+	
+	</div>
+</div>
+
+<div id="deleteCoursePageID" data-role="page">
+    <div id="deleteCoursePageHeaderID" data-role="header" data-position="inline" data-theme="a">
+		<h3>Delete Class</h3>
+		<a href="#homePageID" data-role="button" data-mini="true" data-inline="true" data-icon="back" data-rel="back">Back</a>
+   	</div>
+	
+	<div id="deleteCoursePageContentID" data-role="content">
+
+	</div>
+	
+	<div id="deleteCoursePageFooterID" data-role="footer">
+	
+	</div>
+</div>
