@@ -29,9 +29,11 @@
 	VALUES ('CS44', '44', 'f4', 'l4');
 	*/
 	
-	function listCourses()
+	function listCourses($username)
 	{
-		$dbQuery = sprintf("SELECT * FROM course ORDER BY courseName, studentFirst ASC");
+		$dbQuery = sprintf("SELECT courseName FROM course ORDER BY courseName ASC");
+		//$dbQuery = sprintf("SELECT studentGt FROM student WHERE studentGt='%s'",
+			//mysql_real_escape_string($username));
 			
 		$result = getDBResultsArray($dbQuery);
 		
@@ -42,7 +44,7 @@
 	function getCoursesByStudentId($studentId) 
 	{
         $dbQuery = sprintf("SELECT * FROM course WHERE studentId = '%s'",
-                mysql_real_escape_string($studentId));
+            mysql_real_escape_string($studentId));
 				
         $result = getDBResultRecord($dbQuery);
 		

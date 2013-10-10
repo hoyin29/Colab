@@ -8,7 +8,7 @@ $(function() {
                 //console.log('pagebeforeshow');
                 //Remove the old rows
                 $('li').remove();
-            
+				
                 //JQuery Fetch The New Ones
                 $.ajax({
                         url: "api/user/a/course",
@@ -20,7 +20,7 @@ $(function() {
 							console.log(data);
 							jQuery.each(data, function() 
 							{	
-								$('#peopleListID').append("<li>" + this.studentFirst + " " + this.studentLast + "</li>");
+								$('#peopleListID').append("<li>" + this.courseName + "</li>");
 							});
 						},
 						error: ajaxError

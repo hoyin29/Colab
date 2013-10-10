@@ -21,7 +21,7 @@
 			<description><![CDATA[Class command]]></description>
 			<index>
 				<description><![CDATA[Get a list of all courses for all students]]></description>
-				<action file='colab.php'><![CDATA[listCourses();]]></action>
+				<action file='colab.php'><![CDATA[listCourses($_REST['user']);]]></action>
 			</index>
 			 
 			<get>
