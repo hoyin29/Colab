@@ -7,7 +7,7 @@ $(function() {
 		{
                 //console.log('pagebeforeshow');
                 //Remove the old rows
-                $('#peopleListID').remove();
+                $('li').remove();
             
                 //JQuery Fetch The New Ones
                 $.ajax({
@@ -19,8 +19,33 @@ $(function() {
 							console.log("***got all courses for this student");
 							console.log(data);
 							jQuery.each(data, function() 
-							{
-								
+							{	
+								$('#peopleListID').append("<li>" + this.studentFirst + " " + this.studentLast + "</li>");
+							});
+						},
+						error: ajaxError
+                });
+                
+                $('#peopleListID').listview('refresh');
+        });
+		
+		$('#homePageID').bind('click', function() 
+		{
+                console.log("going back to home");
+                //Remove the old rows
+                $('li').remove();
+            
+                //JQuery Fetch The New Ones
+                $.ajax({
+                        url: "api/user/a/course",
+                        dataType: "json",
+						async: false,
+						success: function(data, textStatus, jqXHR) 
+						{
+							console.log("***got all courses for this student");
+							console.log(data);
+							jQuery.each(data, function() 
+							{	
 								$('#peopleListID').append("<li>" + this.studentFirst + " " + this.studentLast + "</li>");
 							});
 						},
