@@ -17,8 +17,10 @@
 <div id="homePageID" data-role="page">
     <div id="homePageHeaderID" data-role="header" data-inline="true" data-theme="a">
 		<h3>Home</h3>
-		<a href="#addCoursePageID" data-role="button" data-mini="true" data-inline="true" data-icon="plus">Add</a>
-		<a href="#deleteCoursePageID" data-role="button" data-inline="true" data-mini="true" data-icon="minus" class="ui-btn-right">Delete</a>
+		<div id=addDeleteCoursePage data-role="controlgroup" data-type="horizontal" data-mini="true">
+			<a href="#addCoursePageID" data-role="button" data-mini="true" data-inline="true" data-icon="plus">Add</a>
+			<a href="#deleteCoursePageID" data-role="button" data-inline="true" data-mini="true" data-icon="minus">Delete</a>
+		</div>
 	</div>
 	
 	<div id="homePageContentID" data-role="content">
