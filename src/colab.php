@@ -1,39 +1,37 @@
 <?php
 	include 'db_helper.php';
 	
-	/*
-	CREATE TABLE course
-	(
-		courseId INT(11) NOT NULL AUTO_INCREMENT,
-		courseName varchar(255) NOT NULL, 
-		studentId varchar(255) NOT NULL,
-		studentFirst varchar(255) NOT NULL,
-		studentLast varchar(255) NOT NULL,
-		PRIMARY KEY (`courseId`)
-	);
-	
-	INSERT INTO course 
-	(courseName, studentId, studentFirst, studentLast) 
-	VALUES ('CS11', '11', 'f1', 'l1');
-	
-	INSERT INTO course 
-	(courseName, studentId, studentFirst, studentLast) 
-	VALUES ('CS22', '22', 'f2', 'l2');
-	
-	INSERT INTO course 
-	(courseName, studentId, studentFirst, studentLast) 
-	VALUES ('CS33', '33', 'f3', 'l3');
-	
-	INSERT INTO course 
-	(courseName, studentId, studentFirst, studentLast) 
-	VALUES ('CS44', '44', 'f4', 'l4');
-	*/
-	
-	function listCourses($username)
+	function getLoginUsername()
 	{
-		$dbQuery = sprintf("SELECT courseName FROM course ORDER BY courseName ASC");
-		//$dbQuery = sprintf("SELECT studentGt FROM student WHERE studentGt='%s'",
-			//mysql_real_escape_string($username));
+		global $_USER;
+		echo $_USER['uid'];
+
+		/*
+		global $_PLATFORM;
+		$result = $_PLATFORM->secureWeb("https://shepherd.cip.gatech.edu/proxy/?url=".urlencode("https://pinch1.lms.gatech.edu/sakai-login-tool/container"));
+		$result = $_PLATFORM->secureWeb("https://shepherd.cip.gatech.edu/proxy/?url=".urlencode("https://t-square.gatech.edu/direct/site.json"));
+		*/
+			
+		/*
+		global $_PLATFORM;
+		$result = $_PLATFORM->secureWeb("https://shepherd.cip.gatech.edu/proxy/?url=".urlencode("https://pinch1.lms.gatech.edu/sakai-login-tool/container"));
+		$result = $_PLATFORM->secureWeb("https://shepherd.cip.gatech.edu/proxy/?url=".urlencode("https://pinch1.lms.gatech.edu/direct/user/current.json"));
+		//var_dump($result);
+		
+		if($result == null)
+			echo json_encode($_USER['uid']);
+		else
+			echo $result;
+		*/
+	}
+	
+	/*
+		Show a list of all courses for a student by student ID
+	*/
+	function listCourses($studentId)
+	{
+		$dbQuery = sprintf("SELECT * FROM course WHERE courseId IN
+			(SELECT courseId FROM studentCourseMapping WHERE studentId=" . $studentId . ")");
 			
 		$result = getDBResultsArray($dbQuery);
 		
@@ -41,36 +39,53 @@
 		echo json_encode($result);
 	}
 	
-	function getCoursesByStudentId($studentId) 
+	/*
+		Get a single course for a student by student ID and course ID 
+	*/
+	function getCourse($studentId, $courseId) 
 	{
-        $dbQuery = sprintf("SELECT * FROM course WHERE studentId = '%s'",
-            mysql_real_escape_string($studentId));
+        $dbQuery = sprintf("SELECT courseName FROM course WHERE courseId IN
+			(SELECT courseId FROM studentCourseMapping WHERE studentId=" . $studentId . " AND courseId=" . $courseId . ")");
 				
-        $result = getDBResultRecord($dbQuery);
+		$result = getDBResultsArray($dbQuery);
 		
-        header("Content-type: application/json");
-        echo json_encode($result);
+		header("Content-type: application/json");
+		echo json_encode($result);
 	}
 
-	function addCourse() 
+	/*
+		Add a new course for a student
+	*/
+	function addCourse($studentId) 
 	{
-        $dbQuery = sprintf("INSERT INTO course (courseName, studentId, studentFirst, studentLast) VALUES ('%s', '%s', '%s', '%s')",
-            mysql_real_escape_string($_POST['courseName']),
-			mysql_real_escape_string($_POST['studentNum']), 
-			mysql_real_escape_string($_POST['studentFirst']), 
-			mysql_real_escape_string($_POST['studentLast']));
- 
+		$dbQuery = sprintf("SELECT courseId FROM course WHERE courseName='%s' LIMIT 1",
+			mysql_real_escape_string($_POST['aCourseName']));
+			
+		$result = getDBResultsArray($dbQuery);
+		$courseId = $result[0]['courseId'];
+
+        $dbQuery = sprintf("INSERT INTO studentCourseMapping (courseId, studentId, visibility) 
+			VALUES (" . $courseId . "," . $studentId . "," . $_POST['aVisibility'] . ")");
+			
         $result = getDBResultInserted($dbQuery, 'courseId');
         
         header("Content-type: application/json");
         echo json_encode($result);
 	}
 
-	function updateCourse($courseId, $courseName) 
+	/*
+		Update an existing course for a student
+	*/
+	function updateCourse($studentId) 
 	{
-        $dbQuery = sprintf("UPDATE course SET courseName = '%s' WHERE courseId = '%s'",
-			mysql_real_escape_string($courseName),
-			mysql_real_escape_string($courseId));
+		$dbQuery = sprintf("SELECT courseId FROM course WHERE courseName='%s' LIMIT 1",
+			mysql_real_escape_string($_POST['eCourseName']));
+			
+		$result = getDBResultsArray($dbQuery);	
+		$courseId = $result[0]['courseId'];
+		
+        $dbQuery = sprintf("UPDATE studentCourseMapping SET visibility=" . $_POST['eVisibility'] 
+			. " WHERE courseId=" . $courseId . " AND studentId=" . $studentId);
         
         $result = getDBResultAffected($dbQuery);
         
@@ -78,14 +93,32 @@
         echo json_encode($result);
 	}
 
-	function deleteCourse($courseId) 
+	/*
+		Delete an existing course for a student
+	*/
+	function deleteCourse($studentId) 
 	{
-        $dbQuery = sprintf("DELETE FROM course WHERE courseId = '%s'",
-            mysql_real_escape_string($courseId));  
+		$dbQuery = sprintf("SELECT courseId FROM course WHERE courseName='%s' LIMIT 1",
+			mysql_real_escape_string($_POST['dCourseName']));
 			
+		$result = getDBResultsArray($dbQuery);
+		$courseId = $result[0]['courseId'];
+        $dbQuery = sprintf("DELETE FROM studentCourseMapping WHERE courseId=" . $courseId . " AND studentId=" . $studentId);  
+	
         $result = getDBResultAffected($dbQuery);
         
         header("Content-type: application/json");
         echo json_encode($result);
+	}
+	
+	function listFriends($courseId)
+	{
+		$dbQuery = sprintf("SELECT studentFirst, studentLast FROM student WHERE studentId IN
+			(SELECT studentId FROM studentCourseMapping WHERE courseId=" . $courseId . ")");
+
+		$result = getDBResultsArray($dbQuery);
+		
+		header("Content-type: application/json");
+		echo json_encode($result);
 	}
 ?>
