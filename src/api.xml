@@ -1,13 +1,21 @@
 <?xml version="1.0"?>
 <api>
-	<description>
-		<![CDATA[Colab API]]>
-	</description>
+	<description><![CDATA[Colab API]]></description>
 	
-	<command id='user' security='protected'>
+	<command id='user' security='private'>
 		<description><![CDATA[User API]]></description>
 		
-		<command id='course' security='protected'>
+		<index>
+			<description><![CDATA[Get a current login student username]]></description>
+			<action file='colab.php' security='private'><![CDATA[getLoginUsername();]]></action>
+		</index>
+		
+		<get>
+			<description><![CDATA[Get a current login student username]]></description>
+			<action file='colab.php' security='private'><![CDATA[getLoginUsername();]]></action>
+		</get>
+			
+		<command id='course' security='private'>
 			<description><![CDATA[Course API]]></description>
 	
 			<index>
@@ -35,7 +43,7 @@
 				<action file='colab.php'><![CDATA[deleteCourse($_REST['user']);]]></action>
 			</delete>
 			
-			<command id='friend' security='protected'>
+			<command id='friend' security='private'>
 				<description><![CDATA[Friend API]]></description>
 			
 				<index>
@@ -45,7 +53,7 @@
 			</command>
 		</command>
 				
-		<command id='location' security='protected'>
+		<command id='location' security='private'>
 			<description><![CDATA[Location API]]></description>
 			
 			<index>
