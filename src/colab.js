@@ -1,13 +1,52 @@
 $(function() {
- // Handler for .ready() called.
+		// Handler for .ready() called.
         console.log('ready');
+		var username;
 		
 		/*
 			Bind to the create so the page gets updated with the listing
 		*/
         $('#homePageID').bind('pagebeforeshow',function(event, ui)
 		{
-                //console.log('pagebeforeshow');
+				$.ajax({
+					url: "api/user",
+					dataType: "text",
+					async: false,
+					success: function(data3, textStatus, jqXHR) 
+					{
+						console.log("***getting currently login username");
+						console.log(data3);
+						username = data3;
+					},
+					error: ajaxError
+				});
+				
+				//console.log("***after ajax call, js has username: " + username);
+				/*
+				$.ajax({
+					url: "https://t-square.gatech.edu/direct/site.json",
+					dataType: "json",
+					async: false,
+					success: function(data4, textStatus, jqXHR) 
+					{
+						console.log("***getting entity collection for the login user");
+						console.log(data4);
+					},
+					error: ajaxError
+				});
+				*/
+				/*
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "https://t-square.gatech.edu/direct/site.json", true);
+				xhr.onreadystatechange = function() 
+				{
+					if (xhr.readyState == 4) 
+					{
+						console.log("***t-square response: \n" + xhr.responseText);
+					}
+				}
+				xhr.send();
+				*/
                 //Remove the old rows
                 $('.people').remove();
 				
@@ -36,7 +75,20 @@ $(function() {
 										console.log(data2);
 										jQuery.each(data2, function() 
 										{	
-											$('#peopleListID').append("<li class='people'><a href='#'>" + this.studentFirst + " " + this.studentLast + "</a></li>");
+											/*
+											$('#peopleListID').append("<li class='people'>" 
+												+ "<a href='#'>" + this.studentFirst + " " + this.studentLast + "</a>"
+												+ "<div data-role='controlgroup' data-type='horizontal'>"
+												+ "<a href='#' data-mini='true' id='visID' data-inline='true' data-icon='plus' data-role='button'>Visibility</a>"
+												+ "<a href='#' data-mini='true' id='chatID' data-inline='true' data-icon='plus' data-role=\"button\">Chat</a>"
+												+ "<a href='#' data-role=\"button\" data-mini='true' id='mapID' data-inline='true' data-icon='plus'>Map</a>"
+												+ "</div></li>");
+											*/
+											
+											$('#peopleListID').append("<li class='people'>" 
+												+ "<a href='#mapPageID'>" + this.studentFirst + " " + this.studentLast + "</a></li>");
+											
+											
 											console.log("---" + this.studentFirst + " " + this.studentLast);
 										});
 									},
@@ -48,11 +100,28 @@ $(function() {
                 });
                 
                 $('#peopleListID').listview('refresh');
+				
+				/*
+				$('#peopleListID').each(function()
+				{
+					$(this).bind('click', function(e)
+					{
+						console.log("item clicked: " + e);
+					});
+				});
+				*/
         });
-	
+		
+		$('#mapPageID').bind('pagebeforeshow',function(event, ui)
+		{
+			//var yourStartLatLng = new google.maps.LatLng(59.3426606750, 18.0736160278);
+			//$('#mapPageContentID').gmap({'center': yourStartLatLng});
+		});
+		
 		/*
 			Bind the back to home button
 		*/
+		/*
 		$('#homePageID').bind('click', function() 
 		{
                 console.log("***going back to home clicked");
@@ -96,6 +165,7 @@ $(function() {
                 
                 $('#peopleListID').listview('refresh');
         });
+		*/
 		
 		/*
 			Bind the add course button
