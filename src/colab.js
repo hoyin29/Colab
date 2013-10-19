@@ -1,4 +1,5 @@
-$(function() {
+$(function() 
+{
 		// Handler for .ready() called.
         console.log('ready');
 		var username;
@@ -239,8 +240,50 @@ $(function() {
 						error: ajaxError
                 });
         });
+		
+		getCurrentLocationOnce();
 });
  
+function getCurrentLocationOnce() 
+{
+	console.log("***inside getCurrentLocation()");
+	if(navigator.geolocation) 
+	{
+		navigator.geolocation.getCurrentPosition(showPosition, showError);
+	} 
+	else 
+	{
+		alert("Your browser does not support HTML5 Geolocation.");
+	}
+}
+
+function showError(error)
+{
+	switch(error.code) 
+	{
+		case error.PERMISSION_DENIED:
+			alert("User denied the request for Geolocation.");
+			break;
+		case error.POSITION_UNAVAILABLE:
+			alert("Location information is unavailable.");
+			break;
+		case error.TIMEOUT:
+			alert("The request to get user location timed out.");
+			break;
+		case error.UNKNOWN_ERROR:
+			alert("An unknown error occurred.");
+			break;
+	}
+}
+
+function showPosition(position)
+{
+	console.log("***inside showPosition()");
+	var coords = position.coords;
+	console.log("***lat: " + coords.latitude + "  lon: " + coords.longitude);
+	
+}
+
 /******************************************************************************/
  
 function ajaxError(jqXHR, textStatus, errorThrown){
