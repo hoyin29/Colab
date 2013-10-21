@@ -110,17 +110,85 @@
 </div>
 
 <div id="mapPageID" data-role="page">
-	<script src="https://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+	<!--<script src="https://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>-->
     <div id="mapPageHeaderID" data-role="header" data-position="inline" data-theme="a">
 		<h3>Map</h3>
 		<a href="#homePageID" data-role="button" data-mini="true" data-inline="true" data-icon="back" data-rel="back">Back</a>
    	</div>
 	
 	<div id="mapPageContentID" data-role="content">
-
+		<div id="candy"></div>
 	</div>	
 	
 	<div id="mapPageFooterID" data-role="footer">
+	
+	</div>
+</div>
+
+<div id="postPageID" data-role="page">
+    <div id="postPageHeaderID" data-role="header" data-position="inline" data-theme="a">
+		<h3>Post</h3>
+		<div id="opsPostPage" data-role="controlgroup" data-type="horizontal" data-mini="true">
+			<a href="#homePageID" data-role="button" data-mini="true" data-inline="true" data-icon="back" data-rel="back">Back</a>
+			<a href="#addPostPageID" data-role="button" data-mini="true" data-inline="true" data-icon="plus">Add</a>
+			<a href="#editPostPageID" data-role="button" data-inline="true" data-mini="true" data-icon="info">Edit</a>
+			<a href="#deletePostPageID" data-role="button" data-inline="true" data-mini="true" data-icon="minus">Delete</a>
+		</div>
+	</div>
+	
+	<div id="postPageContentID" data-role="content">
+		<ul id="postListID" data-role="listview" data-split-icon="gear" data-split-theme="d" data-inset="true" data-filter="true" data-theme="c" data-divider-theme="b">
+		</ul>
+	</div>	
+	
+	<div id="postPageFooterID" data-role="footer">
+	
+	</div>
+</div>
+
+<div id="addPostPageID" data-role="page">
+    <div id="addPostPageHeaderID" data-role="header" data-position="inline" data-theme="a">
+		<h3>Add Post</h3>
+		<a href="#homePageID" data-role="button" data-mini="true" data-inline="true" data-icon="back" data-rel="back">Back</a>
+   	</div>
+		
+	<div id="addPostPageContentID" data-role="content">
+		<input id="aPostNameID" type="text" placeholder="Post name">
+		<textarea rows="20" cols="50">Post text</textarea>
+		<input id="addPostBtnID" type="submit" value="Add">
+	</div>
+	
+	<div id="addPostPageFooterID" data-role="footer">
+	
+	</div>
+</div>
+
+<div id="deletePostPageID" data-role="page">
+    <div id="deletePostPageHeaderID" data-role="header" data-position="inline" data-theme="a">
+		<h3>Delete Post</h3>
+		<a href="#homePageID" data-role="button" data-mini="true" data-inline="true" data-icon="back" data-rel="back">Back</a>
+   	</div>
+	
+	<div id="deletePostPageContentID" data-role="content">
+
+	</div>
+	
+	<div id="deletePostPageFooterID" data-role="footer">
+	
+	</div>
+</div>
+
+<div id="editPostPageID" data-role="page">
+    <div id="editPostPageHeaderID" data-role="header" data-position="inline" data-theme="a">
+		<h3>Edit Post</h3>
+		<a href="#homePageID" data-role="button" data-mini="true" data-inline="true" data-icon="back" data-rel="back">Back</a>
+   	</div>
+	
+	<div id="editPostPageContentID" data-role="content">
+
+	</div>	
+	
+	<div id="editPostPageFooterID" data-role="footer">
 	
 	</div>
 </div>
