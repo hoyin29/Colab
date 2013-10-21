@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <api>
-	<description><![CDATA[Colab API]]></description>
+	<description><![CDATA[colab API]]></description>
 	
 	<command id='user' security='private'>
 		<description><![CDATA[User API]]></description>
 		
 		<index>
 			<description><![CDATA[Get a current login student username]]></description>
-			<action file='colab.php' security='private'><![CDATA[getLoginUsername();]]></action>
+			<action file='colab.php' security='private'><![CDATA[getLoginUsername();]]></action> 
+			<!-- <action file='colab.php' security='private'><![CDATA[getCoursesFromTS();]]></action> -->
 		</index>
 		
 		<get>
@@ -47,9 +48,53 @@
 				<description><![CDATA[Friend API]]></description>
 			
 				<index>
-					<description><![CDATA[Get a list of all friends in a class for a student]]></description>
+					<description><![CDATA[Get a list of all friends for a course]]></description>
 					<action file='colab.php'><![CDATA[listFriends($_REST['user/course']);]]></action>
 				</index>
+			</command>
+			
+			<command id='post' security='private'>
+				<description><![CDATA[Post API]]></description>
+			
+				<index>
+					<description><![CDATA[Get a list of all posts for a course]]></description>
+					<action file='colab.php'><![CDATA[listPosts($_REST['user/course']);]]></action>
+				</index>
+				
+				<get>
+					<description><![CDATA[Get a post for a course]]></description>
+					<action file='colab.php'><![CDATA[getPost($_REST['user/course'], $_REST['user/course/post']);]]></action>
+				</get>
+				
+				<post>
+					<description><![CDATA[Add a post for a course]]></description>
+					<action file='colab.php'><![CDATA[addPost[$_REST['user/course']);]]></action>
+				</post>
+				
+				<put>
+					<description><![CDATA[Update a post for a course]]></description>
+					<action file='colab.php'><![CDATA[updatePost($_REST['user/course']);]]></action>
+				</put>
+				
+				<delete>
+					<description><![CDATA[Delete a post for a course]]></description>
+					<action file='colab.php'><![CDATA[deletePost($_REST['user/course']);]]></action>
+				</delete>
+			
+				<command id='comment' security='private'>
+					<description><![CDATA[Comment API]]></description>
+				
+					<index>
+						<description><![CDATA[Get a list of all comments for a post]]></description>
+						<action file='colab.php'><![CDATA[listComments($_REST['user/course/post']);]]></action>
+					</index>
+					
+					<get>
+						<description><![CDATA[Get a comment for a post]]></description>
+						<action file='colab.php'><![CDATA[getComment($_REST['user/course/post'], $_REST['user/course/post/comment']);]]></action>
+					</get>
+				
+				</command>
 			</command>
 		</command>
 				
